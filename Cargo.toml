@@ -1,0 +1,36 @@
+[package]
+name = "misty_maze"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+avian2d = "0.3.0"
+bevy = { version = "0.16.0", features = ["dynamic_linking"] }
+rand = "0.9.1"
+# bevy_ecs_tilemap = "0.16.0"
+# big_brain
+# lightyear
+
+[target.wasm32-unknown-unknown.dependencies]
+getrandom = { version = "0.3.3", features = ["wasm_js"] }
+
+# Enable a small amount of optimization in the dev profile.
+[profile.dev]
+opt-level = 1
+
+# Enable a large amount of optimization in the dev profile for dependencies.
+[profile.dev.package."*"]
+opt-level = 3
+
+# Enable more optimization in the release profile at the cost of compile time.
+[profile.release]
+codegen-units = 1
+lto = true
+
+# Optimize for size in the wasm-release profile to reduce load times and bandwidth usage on web.
+[profile.wasm-release]
+# Default to release profile values.
+inherits = "release"
+opt-level = "z"
+strip = true
+panic = "abort"
